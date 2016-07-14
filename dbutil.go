@@ -268,6 +268,16 @@ func (self *DbUtil)Execute(sql string, params ...interface{})(int64,error){
 	return 0,&DbUtilError{"The database have no initial."}
 }
 /**
+ * start a transaction
+ */
+func (self *DbUtil) Begin()(*Tran,error){
+	tx,err := self.database.Begin()
+	if err != nil {
+		return nil,err
+	}
+	return &Tran{tx},nil
+}
+/**
  * destroy the database pool.
  */
 func (self *DbUtil)Destroy()error{
