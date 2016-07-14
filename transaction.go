@@ -23,6 +23,20 @@ func (self *Tran)Execute(sql string, params ...interface{})(int64,error){
 	return 0,&DbUtilError{"The database have no initial."}
 }
 
+func (self *Tran)Query(sql string, params ...interface{})(*sql.Rows,error){
+	if self.Tx != nil{
+		return self.Tx.Query(sql,params...)
+	}
+	return nil,&DbUtilError{"The database have no initial."}
+}
+
+func (self *Tran)QueryRow(sql string, params ...interface{})(*sql.Row,error){
+	if self.Tx != nil{
+		return self.Tx.QueryRow(sql,params...),nil
+	}
+	return nil,&DbUtilError{"The database have no initial."}
+}
+
 /**
  * commit
  */
